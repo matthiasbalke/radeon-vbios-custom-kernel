@@ -14,11 +14,11 @@ uname -r
 uname -a
 
 # add deb-src sources
-sudo sh -c 'echo "deb http://ftp.hosteurope.de/mirror/archive.ubuntu.com noble main restricted universe multiverse
-deb-src http://ftp.hosteurope.de/mirror/archive.ubuntu.com noble main restricted universe multiverse
+sudo sh -c 'echo "deb http://azure.archive.ubuntu.com/ubuntu noble main restricted universe multiverse
+deb-src http://azure.archive.ubuntu.com/ubuntu noble main restricted universe multiverse
 
-deb http://ftp.hosteurope.de/mirror/archive.ubuntu.com noble-updates main restricted universe multiverse
-deb-src http://ftp.hosteurope.de/mirror/archive.ubuntu.com noble-updates main restricted universe multiverse" > /etc/apt/sources.list.d/official-source-package-repositories.list'
+deb http://azure.archive.ubuntu.com/ubuntu noble-updates main restricted universe multiverse
+deb-src http://azure.archive.ubuntu.com/ubuntu noble-updates main restricted universe multiverse" > /etc/apt/sources.list.d/official-source-package-repositories.list'
 
 # refresh repositories
 time sudo apt-get update
