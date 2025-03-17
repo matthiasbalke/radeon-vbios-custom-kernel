@@ -1,7 +1,7 @@
 #!/bin/bash -x
 
 # exit after first error
-#set -e
+set -e
 
 # docs: https://wiki.ubuntu.com/Kernel/BuildYourOwnKernel
 
@@ -51,18 +51,15 @@ echo "Build started at:"
 date
 echo ""
 
-time make ARCH=x86 mrproper
+time make mrproper
 
 # import ubuntu kernel config
 time ./debian/scripts/misc/annotations --arch amd64 --flavour generic --import ../config-$kernelVersionToBuild
 
 # apply config
-time fakeroot debian/rules clean updateconfigs
+# even if this does not exit with exit 0, continue
+time fakeroot debian/rules clean updateconfigs || true
 
 # build the: quicker build
-time fakeroot debian/rules binary-headers binary-generic binary-perarch
-
-# move artifacts
-cd ..
-mv *.deb ubuntu-custom-kernel-packages/
+time fakeroot debian/rules binary-headers binary-generic
 
