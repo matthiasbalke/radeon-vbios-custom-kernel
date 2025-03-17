@@ -13,7 +13,7 @@ index f829da84a..4ab805072 100644
 +++ b/debian.master/changelog
 @@ -1,4 +1,4 @@
 -linux (6.8.0-55.57) noble; urgency=medium
-+linux (6.8.0-55radeonvbiosfromdisk.57) noble; urgency=medium
++linux (6.8.0-55+radeonvbiosfromdisk.57) noble; urgency=medium
  
    * noble/linux: 6.8.0-55.57 -proposed tracker (LP: #2097981)
  
