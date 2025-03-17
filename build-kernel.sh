@@ -7,7 +7,7 @@ set -e
 
 # output of "uname -r"
 kernelVersionToBuild=6.8.0-55-generic
-kernelSourceVersion=i$( echo $kernelVersionToBuild | cut -d\- -f 1)
+kernelSourceVersion=$( echo $kernelVersionToBuild | cut -d\- -f 1)
 
 # CI debugging
 uname -r
@@ -28,7 +28,7 @@ time sudo apt install libncurses-dev gawk flex bison openssl libssl-dev dkms lib
 
 ls -al
 
-cd $kernelSourceVersion
+cd linux-$kernelSourceVersion
 
 time make ARCH=x86 mrproper
 
