@@ -1,0 +1,91 @@
+From 1e606306a98a496f19d32606ff7a4322618a81ea Mon Sep 17 00:00:00 2001
+From: Matthias Balke <matthias.balke@googlemail.com>
+Date: Sun, 16 Mar 2025 01:01:40 +0100
+Subject: [PATCH] applied patch to read vBIOS from disk
+
+---
+ drivers/gpu/drm/radeon/radeon_bios.c | 40 ++++++++++++++++++++++++++++
+ 1 files changed, 40 insertions(+)
+
+diff --git a/drivers/gpu/drm/radeon/radeon_bios.c b/drivers/gpu/drm/radeon/radeon_bios.c
+index c9e0f35b3..8a1b7fb31 100644
+--- a/drivers/gpu/drm/radeon/radeon_bios.c
++++ b/drivers/gpu/drm/radeon/radeon_bios.c
+@@ -31,6 +31,7 @@
+ #include <linux/slab.h>
+ 
+ #include <drm/drm_device.h>
++#include <linux/firmware.h>
+ 
+ #include "atom.h"
+ #include "radeon.h"
+@@ -60,6 +61,7 @@ static bool igp_read_bios_from_vram(struct radeon_device *rdev)
+ 	vram_base = pci_resource_start(rdev->pdev, 0);
+ 	bios = ioremap(vram_base, size);
+ 	if (!bios) {
++		DRM_ERROR("No bios\n");
+ 		return false;
+ 	}
+ 
+@@ -69,6 +71,7 @@ static bool igp_read_bios_from_vram(struct radeon_device *rdev)
+ 	}
+ 	rdev->bios = kmalloc(size, GFP_KERNEL);
+ 	if (rdev->bios == NULL) {
++		DRM_ERROR("alloc fail\n");
+ 		iounmap(bios);
+ 		return false;
+ 	}
+@@ -77,6 +80,41 @@ static bool igp_read_bios_from_vram(struct radeon_device *rdev)
+ 	return true;
+ }
+ 
++static bool radeon_read_bios_from_firmware(struct radeon_device *rdev)
++{
++	const uint8_t __iomem *bios;
++	resource_size_t size;
++	const struct firmware *fw = NULL;
++
++	request_firmware(&fw, "radeon/vbios.bin", rdev->dev);
++	if (!fw) {
++		DRM_ERROR("No bios\n");
++		return false;
++	}
++	size = fw->size;
++	bios = fw->data;
++
++	if (!bios) {
++		DRM_ERROR("No bios\n");
++		return false;
++	}
++
++	if (size == 0 || bios[0] != 0x55 || bios[1] != 0xaa) {
++		DRM_ERROR("wrong sig\n");
++		release_firmware(fw);
++		return false;
++	}
++	rdev->bios = kmalloc(size, GFP_KERNEL);
++	if (rdev->bios == NULL) {
++		DRM_ERROR("alloc fail\n");
++		release_firmware(fw);
++		return false;
++	}
++	memcpy(rdev->bios, bios, size);
++	release_firmware(fw);
++	return true;
++}
++
+ static bool radeon_read_bios(struct radeon_device *rdev)
+ {
+ 	uint8_t __iomem *bios, val1, val2;
+@@ -677,6 +715,8 @@ bool radeon_get_bios(struct radeon_device *rdev)
+ 		r = radeon_read_disabled_bios(rdev);
+ 	if (!r)
+ 		r = radeon_read_platform_bios(rdev);
++	if (!r)
++		r = radeon_read_bios_from_firmware(rdev);
+ 	if (!r || rdev->bios == NULL) {
+ 		DRM_ERROR("Unable to locate a BIOS ROM\n");
+ 		rdev->bios = NULL;
+-- 
+2.43.0
+

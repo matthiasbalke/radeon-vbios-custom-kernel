@@ -42,6 +42,7 @@ cd linux-$kernelSourceVersion
 
 # apply patches
 patch -p1 < ../0001-change-debian.master-release-version.patch
+patch -p1 < ../0002-patch-to-read-vBIOS-from-disk.patch
 
 chmod a+x debian/rules
 chmod a+x debian/scripts/*
