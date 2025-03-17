@@ -1,7 +1,7 @@
 #!/bin/bash -x
 
 # exit after first error
-set -e
+#set -e
 
 # docs: https://wiki.ubuntu.com/Kernel/BuildYourOwnKernel
 
