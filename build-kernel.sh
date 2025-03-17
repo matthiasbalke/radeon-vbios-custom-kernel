@@ -23,15 +23,23 @@ deb-src http://ftp.hosteurope.de/mirror/archive.ubuntu.com noble-updates main re
 # refresh repositories
 time sudo apt-get update
 
+pwd
+
 # install kernel sources
 time apt-get build-dep -y linux linux-image-unsigned-$kernelVersionToBuild
+
+pwd
+ls -al
 
 # install required packages to build the ubuntu kernel
 time sudo apt-get install -y libncurses-dev gawk flex bison openssl libssl-dev dkms libelf-dev libudev-dev libpci-dev libiberty-dev autoconf llvm
 
+pwd
 ls -al
 
 cd linux-$kernelSourceVersion
+
+pwd
 
 time make ARCH=x86 mrproper
 
