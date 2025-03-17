@@ -33,4 +33,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ubuntu-custom-kernel-packages
-          path: *.deb
+          path: ubuntu-custom-kernel-packages
+

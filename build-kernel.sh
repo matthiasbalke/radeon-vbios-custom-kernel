@@ -35,6 +35,9 @@ time apt source linux-image-unsigned-$kernelVersionToBuild
 pwd
 ls -al
 
+# create directory for custom kernel packages
+mkdir ubuntu-custom-kernel-packages
+
 cd linux-$kernelSourceVersion
 
 chmod a+x debian/rules
@@ -55,4 +58,8 @@ time fakeroot debian/rules clean updateconfigs
 
 # build the: quicker build
 time fakeroot debian/rules binary-headers binary-generic binary-perarch
+
+# move artifacts
+cd ..
+mv *.deb ubuntu-custom-kernel-packages/
 
