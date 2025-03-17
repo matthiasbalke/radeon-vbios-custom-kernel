@@ -24,7 +24,7 @@ deb-src http://ftp.hosteurope.de/mirror/archive.ubuntu.com noble-updates main re
 time sudo apt-get update
 
 # install kernel sources
-time sudo apt-get build-dep -y linux linux-image-unsigned-$kernelVersionToBuild
+time apt-get build-dep -y linux linux-image-unsigned-$kernelVersionToBuild
 
 # install required packages to build the ubuntu kernel
 time sudo apt-get install -y libncurses-dev gawk flex bison openssl libssl-dev dkms libelf-dev libudev-dev libpci-dev libiberty-dev autoconf llvm
