@@ -25,14 +25,17 @@ time sudo apt-get update
 
 pwd
 
-# install kernel sources
-time apt-get build-dep -y linux linux-image-unsigned-$kernelVersionToBuild
+# install kernel source packages
+time sudo apt-get build-dep -y linux linux-image-unsigned-$kernelVersionToBuild
 
 pwd
 ls -al
 
 # install required packages to build the ubuntu kernel
 time sudo apt-get install -y libncurses-dev gawk flex bison openssl libssl-dev dkms libelf-dev libudev-dev libpci-dev libiberty-dev autoconf llvm
+
+# get kernel sources
+time apt source linux-image-unsigned-$kernelVersionToBuild
 
 pwd
 ls -al
