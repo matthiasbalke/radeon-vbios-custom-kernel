@@ -1,0 +1,8 @@
+*.iso
+ramdisk.img
+vmlinuz*
+linux-*
+linux_*.diff.gz
+linux_*.dsc
+linux_*.tar.gz
+
