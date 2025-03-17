@@ -40,6 +40,9 @@ mkdir ubuntu-custom-kernel-packages
 
 cd linux-$kernelSourceVersion
 
+# apply patches
+patch -p1 < ../0001-change-debian.master-release-version.patch
+
 chmod a+x debian/rules
 chmod a+x debian/scripts/*
 chmod a+x debian/scripts/misc/*
