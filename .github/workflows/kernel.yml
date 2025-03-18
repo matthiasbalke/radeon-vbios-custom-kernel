@@ -49,7 +49,7 @@ jobs:
       - name: Move created artifacts
         shell: bash
         run: |
-          mv ../*.deb ../ubuntu-custom-kernel-packages/
+          mv *.deb ubuntu-custom-kernel-packages/
 
       - name: Archive Kernel Packages
         uses: actions/upload-artifact@v4
