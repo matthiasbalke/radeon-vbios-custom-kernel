@@ -35,7 +35,7 @@ index c9e0f35b3..8a1b7fb31 100644
  		iounmap(bios);
  		return false;
  	}
-@@ -77,6 +80,41 @@ static bool igp_read_bios_from_vram(struct radeon_device *rdev)
+@@ -77,6 +81,42 @@ static bool igp_read_bios_from_vram(struct radeon_device *rdev)
  	return true;
  }
  

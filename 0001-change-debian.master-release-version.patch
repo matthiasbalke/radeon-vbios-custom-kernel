@@ -15,8 +15,8 @@ index f829da84a..4ab805072 100644
 -linux (6.8.0-60.63) noble; urgency=medium
 +linux (6.8.0-160.63) noble; urgency=medium
 
-  * noble/linux: 6.8.0-60.63 -proposed tracker (LP: #2107138)
- 
+   * noble/linux: 6.8.0-60.63 -proposed tracker (LP: #2107138)
+
 -- 
 2.43.0
 
