@@ -23,7 +23,7 @@ index c9e0f35b3..8a1b7fb31 100644
  	vram_base = pci_resource_start(rdev->pdev, 0);
  	bios = ioremap(vram_base, size);
  	if (!bios) {
-+		DRM_ERROR("No bios\n");
++		DRM_ERROR("Could not read vBios from NVRam\n");
  		return false;
  	}
  
@@ -47,25 +47,26 @@ index c9e0f35b3..8a1b7fb31 100644
 +
 +	request_firmware(&fw, "radeon/vbios.bin", rdev->dev);
 +	if (!fw) {
-+		DRM_ERROR("No bios\n");
++		DRM_ERROR("No vBios firmeware file found at: 'radeon/vbios.bin'\n");
 +		return false;
 +	}
++	DRM_INFO("Reading vBios from firmeware file at: 'radeon/vbios.bin'\n");
 +	size = fw->size;
 +	bios = fw->data;
 +
 +	if (!bios) {
-+		DRM_ERROR("No bios\n");
++		DRM_ERROR("Could not read vBios from firmeware file\n");
 +		return false;
 +	}
 +
 +	if (size == 0 || bios[0] != 0x55 || bios[1] != 0xaa) {
-+		DRM_ERROR("wrong sig\n");
++		DRM_ERROR("vBios firmeware file signature does not match. Must start with: 0x55aa\n");
 +		release_firmware(fw);
 +		return false;
 +	}
 +	rdev->bios = kmalloc(size, GFP_KERNEL);
 +	if (rdev->bios == NULL) {
-+		DRM_ERROR("alloc fail\n");
++		DRM_ERROR("Could not allocate firmeware from file\n");
 +		release_firmware(fw);
 +		return false;
 +	}
