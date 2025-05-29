@@ -15,4 +15,6 @@ cp -a ../config-* ./
 rm -rf linux-6.8.0 || true
 ../install-kernel-sources.sh
 
+../configure-kernel-build.sh
+
 ../build-kernel.sh
