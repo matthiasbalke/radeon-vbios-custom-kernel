@@ -44,6 +44,12 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Build the ubuntu kernel
+        run: ./install-dependencies.sh
+
+      - name: Build the ubuntu kernel
+        run: ./install-kernel-sources.sh
+
+      - name: Build the ubuntu kernel
         run: ./build-kernel.sh
 
       - name: Move created artifacts

@@ -1,0 +1,30 @@
+#!/bin/bash -x
+
+# exit after first error
+set -e
+
+# docs: https://wiki.ubuntu.com/Kernel/BuildYourOwnKernel
+
+# output of "uname -r"
+kernelVersionToBuild=6.8.0-60-generic
+kernelSourceVersion=$( echo $kernelVersionToBuild | cut -d\- -f 1)
+
+# CI debugging
+uname -r
+uname -a
+
+# add deb-src sources
+sudo sh -c 'echo "deb http://azure.archive.ubuntu.com/ubuntu noble main restricted universe multiverse
+deb-src http://azure.archive.ubuntu.com/ubuntu noble main restricted universe multiverse
+
+deb http://azure.archive.ubuntu.com/ubuntu noble-updates main restricted universe multiverse
+deb-src http://azure.archive.ubuntu.com/ubuntu noble-updates main restricted universe multiverse" > /etc/apt/sources.list.d/official-source-package-repositories.list'
+
+# refresh repositories
+time sudo apt-get update
+
+# install kernel source packages
+time sudo apt-get build-dep -y linux linux-image-unsigned-$kernelVersionToBuild
+
+# install required packages to build the ubuntu kernel
+time sudo apt-get install -y libncurses-dev gawk flex bison openssl libssl-dev dkms libelf-dev libudev-dev libpci-dev libiberty-dev autoconf llvm
