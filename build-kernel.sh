@@ -34,8 +34,6 @@ time make mrproper
 # import ubuntu kernel config
 time ./debian/scripts/misc/annotations --arch amd64 --flavour generic --import ../config-$kernelVersionToBuild
 
-exit 3
-
 # apply config
 # even if this does not exit with exit 0, continue
 time fakeroot debian/rules clean updateconfigs || true
