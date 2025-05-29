@@ -43,19 +43,26 @@ jobs:
       - uses: actions/checkout@v4
 
       # Runs a single command using the runners shell
-      - name: Build the ubuntu kernel
+      - name: Install dependencies
         run: ./install-dependencies.sh
 
-      - name: Build the ubuntu kernel
+      - name: Install kernel sources
         run: ./install-kernel-sources.sh
+
+      - name: Configure kernel build
+        run: ./configure-kernel-build.sh
 
       - name: Build the ubuntu kernel
         run: ./build-kernel.sh
 
+      - name: List created artifacts
+        shell: bash
+        run: |
+          ls -alh
+
       - name: Move created artifacts
         shell: bash
         run: |
-          ls -al \
           mv *.deb ubuntu-custom-kernel-packages/
 
       - name: Archive Kernel Packages
