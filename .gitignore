@@ -5,4 +5,5 @@ linux-*
 linux_*.diff.gz
 linux_*.dsc
 linux_*.tar.gz
-
+test/*.patch
+test/config-*
