@@ -9,10 +9,5 @@ set -e
 kernelVersionToBuild=6.8.0-60-generic
 kernelSourceVersion=$( echo $kernelVersionToBuild | cut -d\- -f 1)
 
-# apply config
-# even if this does not exit with exit 0, continue
-time fakeroot debian/rules clean updateconfigs || true
-
-# build the: quicker build
-time fakeroot debian/rules binary-headers binary-generic
-
+# get kernel sources
+time apt source linux-image-unsigned-$kernelVersionToBuild
